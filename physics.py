@@ -32,21 +32,6 @@ class PhysicsEngine(object):
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch
 
-        # fmt: off
-        self.drivetrain = tankmodel.TankModel.theory(
-            motor_cfgs.MOTOR_CFG_CIM,           # motor configuration
-            110 * units.lbs,                    # robot mass
-            10.71,                              # drivetrain gear ratio
-            2,                                  # motors per side
-            22 * units.inch,                    # robot wheelbase
-            23 * units.inch + bumper_width * 2, # robot width
-            32 * units.inch + bumper_width * 2, # robot length
-            6 * units.inch,                     # wheel diameter
-        )
-        # fmt: on
-
-        self.motion = motion.LinearMotion('Motion', 2, 360, 20, -20)
-
     def update_sim(self, hal_data, now, tm_diff):
         """
             Called when the simulation parameters for the program need to be
@@ -58,11 +43,5 @@ class PhysicsEngine(object):
         """
 
         # Simulate the drivetrain
-        l_motor = hal_data["CAN"][1]["value"]
+        l_motor = hal_data["CAN"][9]["value"]
         r_motor = 0
-
-        x, y, angle = self.drivetrain.get_distance(l_motor, r_motor, tm_diff)
-        self.physics_controller.distance_drive(x, y, angle)
-
-		# Linear motion for encoder
-        hal_data['encoder'][0]['value'] = self.motion.compute(l_motor, tm_diff)
