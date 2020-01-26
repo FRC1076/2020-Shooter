@@ -14,7 +14,7 @@ class Robot(wpilib.TimedRobot):
         print("It's Alive")
         self.stick = wpilib.XboxController(0)
         self.motor1 = ctre.WPI_TalonSRX(PORT)
-
+        self.encoder = wpilib.Encoder(0,1)
         #display motor rpm
         NetworkTables.initialize()
         logging.basicConfig(level = logging.DEBUG)
@@ -27,7 +27,7 @@ class Robot(wpilib.TimedRobot):
         print("TELEOP BEGINS")
         #self.motor2 = ctre.WPI_TalonSRX(PORT)
        # self.drive = DifferentialDrive(self.motor1, self.motor2)
-        self.encoder = wpilib.Encoder(0,1)
+        
         # setup wheel diameter
 
     def teleopPeriodic(self):
