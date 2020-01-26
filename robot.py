@@ -9,9 +9,9 @@ PORT = 9
 
 # Encoder Constants
 # made up values, must do testing
- DISTANCE_PER_PULSE = 1.0 
- MAX_PERIOD = 1.0
- MIN_RATE = 1.0
+DISTANCE_PER_PULSE = 1.0 
+MAX_PERIOD = 1.0
+MIN_RATE = 1.0
 
 
 
