@@ -7,6 +7,13 @@ import logging
 
 PORT = 9
 
+# Encoder Constants
+# made up values, must do testing
+ DISTANCE_PER_PULSE = 1.0 
+ MAX_PERIOD = 1.0
+ MIN_RATE = 1.0
+
+
 
 class Robot(wpilib.TimedRobot):
     def robotInit(self):
@@ -15,6 +22,7 @@ class Robot(wpilib.TimedRobot):
         self.stick = wpilib.XboxController(0)
         self.motor1 = ctre.WPI_TalonSRX(PORT)
         self.encoder = wpilib.Encoder(0,1)
+        
         #display motor rpm
         NetworkTables.initialize()
         logging.basicConfig(level = logging.DEBUG)
@@ -25,9 +33,16 @@ class Robot(wpilib.TimedRobot):
 
     def teleopInit(self):
         print("TELEOP BEGINS")
+
+        # Encoder parameters initialization.
+        self.encoder.reset()
+        #self.encoder.setDistancePerPulse(DISTANCE_PER_PULSE)
+        #self.encoder.setMaxPeriod(MAX_PERIOD)
+        #self.encoder.setMinRate(MIN_RATE)
+
+
         #self.motor2 = ctre.WPI_TalonSRX(PORT)
        # self.drive = DifferentialDrive(self.motor1, self.motor2)
-        
         # setup wheel diameter
 
     def teleopPeriodic(self):
