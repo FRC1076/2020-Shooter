@@ -5,7 +5,8 @@ import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
 
-PORT = 9
+MOTOR1 = 1
+MOTOR2 = 2
 
 # Encoder Constants
 # made up values, must do testing
@@ -20,7 +21,8 @@ class Robot(wpilib.TimedRobot):
         #DRIVETRAIN
         print("It's Alive")
         self.stick = wpilib.XboxController(0)
-        self.motor1 = ctre.WPI_TalonSRX(PORT)
+        self.motor1 = ctre.WPI_TalonSRX(MOTOR1)
+        self.motor2 = ctre.WPI_TalonSRX(MOTOR2)
         self.encoder = wpilib.Encoder(0,1)
         
         #display motor rpm
@@ -48,6 +50,7 @@ class Robot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         forward = self.stick.getRawAxis(5)
         self.motor1.set(forward)
+        self.motor2.set(forward)
         #print(self.encoder.get())
         QuadPosition = self.motor1.getQuadraturePosition()
         print(QuadPosition)
