@@ -4,6 +4,7 @@ import wpilib
 import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
+from navx import AHRS
 
 PORT = 9
 
@@ -28,6 +29,7 @@ class Robot(wpilib.TimedRobot):
         logging.basicConfig(level = logging.DEBUG)
         self.sd = NetworkTables.getTable("SmartDashboard")
 
+         
     def robotPeriodic(self):
         return
 
@@ -45,6 +47,8 @@ class Robot(wpilib.TimedRobot):
        # self.drive = DifferentialDrive(self.motor1, self.motor2)
         # setup wheel diameter
 
+        # Gyro
+        self.ahrs = AHRS.create_spi()
     def teleopPeriodic(self):
         forward = self.stick.getRawAxis(5)
         self.motor1.set(forward)
