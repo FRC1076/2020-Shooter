@@ -5,7 +5,7 @@ import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
 from navx import AHRS
-
+from Aimer import Aimer
 PORT = 9
 
 # Encoder Constants
@@ -28,6 +28,12 @@ class Robot(wpilib.TimedRobot):
         NetworkTables.initialize()
         logging.basicConfig(level = logging.DEBUG)
         self.sd = NetworkTables.getTable("SmartDashboard")
+        # Gyro
+        self.ahrs = AHRS.create_spi()
+        self.Aimer = Aimer(self.ahrs)
+        self.s = wpilib.Joystick(0)
+
+        
 
          
     def robotPeriodic(self):
@@ -35,8 +41,7 @@ class Robot(wpilib.TimedRobot):
 
     def teleopInit(self):
         print("TELEOP BEGINS")
-
-        # Encoder parameters initialization.
+        
         self.encoder.reset()
         #self.encoder.setDistancePerPulse(DISTANCE_PER_PULSE)
         #self.encoder.setMaxPeriod(MAX_PERIOD)
@@ -47,17 +52,21 @@ class Robot(wpilib.TimedRobot):
        # self.drive = DifferentialDrive(self.motor1, self.motor2)
         # setup wheel diameter
 
-        # Gyro
-        self.ahrs = AHRS.create_spi()
+        
     def teleopPeriodic(self):
+        aiming = False
         forward = self.stick.getRawAxis(5)
         self.motor1.set(forward)
         #print(self.encoder.get())
         QuadPosition = self.motor1.getQuadraturePosition()
         print(QuadPosition)
         self.sd.putNumber("ShooterRPM", QuadPosition)
-
-
+        
+        if self.s.getRawButton(2):
+            spin=self.Aimer.aim(50)  
+            aiming = True
+        if aiming:
+            self.motor1.set(spin)
 if __name__ == "__main__":
 	wpilib.run(Robot)
     
