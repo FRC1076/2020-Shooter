@@ -5,8 +5,8 @@ import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
 
-MOTOR1 = 0
-MOTOR2 = 1
+MOTOR1 = 1
+MOTOR2 = 9
 
 #Encoder Constants
 #made up values, must do testing
