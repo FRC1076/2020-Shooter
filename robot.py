@@ -63,7 +63,7 @@ class Robot(wpilib.TimedRobot):
         self.sd.putNumber("ShooterRPM", QuadPosition)
         
         if self.s.getRawButton(2):
-            spin=self.Aimer.aim(50)  
+            spin=self.Aimer.aim()  
             aiming = True
         if aiming:
             self.motor1.set(spin)
