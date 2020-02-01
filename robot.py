@@ -51,7 +51,12 @@ class Robot(wpilib.TimedRobot):
         forward = self.stick.getRawAxis(5)
         while self.stick.getAButtonPressed() == True:
             forward = 1
-        
+        while self.stick.getBButtonPressed() == True:
+            forward = 0.75
+        while self.stick.getYButtonPressed() == True:
+            forward = 0.5
+        while self.stick.getXButtonPressed() == True:
+            forward = 0.25
         self.motor1.set(forward)
         self.motor2.set(-forward)
 
