@@ -41,8 +41,12 @@ class Aimer:
     #     #else:
     #      #   self.turnController.disable()
     #      #   self.currentRotationRate = self.stick.getTwist()
-            
-    def aim(self,setpoint):
+    def setaim(self,setpoint):
+        self.setpoint=setpoint:
+        
+        
+
+    def aim(self,):
         #self.ahrs.reset()
         self.turncontroller.setSetpoint(self.gyro.getYaw()+setpoint)
         self.turncontroller.enable()
