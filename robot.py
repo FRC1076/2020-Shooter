@@ -5,8 +5,8 @@ import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
 
-MOTOR1 = 0
-MOTOR2 = 1
+MOTOR1 = 1
+MOTOR2 = 9
 
 #Encoder Constants
 #made up values, must do testing
@@ -49,14 +49,14 @@ class Robot(wpilib.TimedRobot):
 
     def teleopPeriodic(self):
         forward = self.stick.getRawAxis(5)
-        while self.stick.getAButtonPressed() == True:
-            forward = 1
-        while self.stick.getBButtonPressed() == True:
-            forward = 0.75
-        while self.stick.getYButtonPressed() == True:
-            forward = 0.5
-        while self.stick.getXButtonPressed() == True:
-            forward = 0.25
+        if self.stick.getAButton():
+            forward = -1
+        if self.stick.getBButton():
+            forward = -0.75
+        if self.stick.getYButton():
+            forward = -0.5
+        if self.stick.getXButton():
+            forward = -0.25
         self.motor1.set(forward)
         self.motor2.set(-forward)
 
