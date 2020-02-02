@@ -4,8 +4,10 @@ import wpilib
 import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
+from subsystems.ballshooter import BallShooter as bs
 
-PORT = 9
+LEFTPORT = 1
+RIGHTPORT = 9
 
 
 class Robot(wpilib.TimedRobot):
@@ -13,19 +15,22 @@ class Robot(wpilib.TimedRobot):
         #DRIVETRAIN
         print("It's Alive")
         self.stick = wpilib.XboxController(0)
-        self.motor1 = ctre.WPI_TalonSRX(PORT)
+        self.motor1 = ctre.WPI_TalonSRX(LEFTPORT)
+        self.motor2 = ctre.WPI_TalonSRX(RIGHTPORT)
 
         #display motor rpm
         NetworkTables.initialize()
         logging.basicConfig(level = logging.DEBUG)
         self.sd = NetworkTables.getTable("SmartDashboard")
 
+        #BALLSHOOTER
+        self.bs = bs(self.motor1, self.motor2)
+
     def robotPeriodic(self):
         return
 
     def teleopInit(self):
         print("TELEOP BEGINS")
-        #self.motor2 = ctre.WPI_TalonSRX(PORT)
        # self.drive = DifferentialDrive(self.motor1, self.motor2)
         self.encoder = wpilib.Encoder(0,1)
         # setup wheel diameter
