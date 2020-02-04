@@ -31,7 +31,7 @@ class Robot(wpilib.TimedRobot):
         # Gyro
         self.ahrs = AHRS.create_spi()
         self.Aimer = Aimer(self.ahrs)
-        self.s = wpilib.Joystick(0)
+        #self.s = wpilib.Joystick(0)
 
         
 
@@ -61,8 +61,10 @@ class Robot(wpilib.TimedRobot):
         QuadPosition = self.motor1.getQuadraturePosition()
         print(QuadPosition)
         self.sd.putNumber("ShooterRPM", QuadPosition)
-        
-        if self.s.getRawButton(2):
+        if self.stick.getAButtonPressed():
+            self.Aimer.setaim(50)
+            #print("hi")
+        if self.stick.getAButton():
             spin=self.Aimer.aim()  
             aiming = True
         if aiming:
