@@ -4,7 +4,8 @@ import wpilib
 import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
-from subsystems.ballshooter import BallShooter as bs
+from subsystems.ballShooter import BallShooter as bs
+
 
 LEFTPORT = 1
 RIGHTPORT = 9
@@ -16,7 +17,7 @@ class Robot(wpilib.TimedRobot):
         print("It's Alive")
         self.stick = wpilib.XboxController(0)
         self.motor1 = ctre.WPI_TalonSRX(LEFTPORT)
-        self.motor2 = ctre.WPI_TalonSRX(RIGHTPORT)
+        self.motor2 = None
 
         #display motor rpm
         NetworkTables.initialize()
@@ -24,8 +25,8 @@ class Robot(wpilib.TimedRobot):
         self.sd = NetworkTables.getTable("SmartDashboard")
 
         #BALLSHOOTER
-        self.bs = bs(self.motor1, self.motor2)
-
+        self.bs = bs(self.motor1,)
+        
     def robotPeriodic(self):
         return
 
@@ -39,11 +40,18 @@ class Robot(wpilib.TimedRobot):
         forward = self.stick.getRawAxis(5)
         self.motor1.set(forward)
         #print(self.encoder.get())
+        
         QuadPosition = self.motor1.getQuadraturePosition()
         print(QuadPosition)
         self.sd.putNumber("ShooterRPM", QuadPosition)
 
-
+        if self.stick.getAButtonPressed():
+            self.bs.setaim(1500)
+        if self.stick.getAButton():
+            speed =self.bs.aim()
+            aiming = True
+        if aiming:
+            self.motor1.set(speed)
 if __name__ == "__main__":
 	wpilib.run(Robot)
-    
+    # /14 *50 *60
