@@ -4,7 +4,7 @@ import wpilib
 import robotpy_ext.common_drivers
 from networktables import NetworkTables
 import logging
-from subsystems.ballShooter import BallShooter as bs
+from subsystems.ballshooter import BallShooter as bs
 
 
 LEFTPORT = 1
